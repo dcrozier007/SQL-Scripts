@@ -1,0 +1,17 @@
+/*
+How to Design Indexes for JOINs
+
+Now let’s move on to multi-table queries. When you join multiple tables together like this, and you’ve got multiple indexes, how does SQL Server choose which index to use? Would it use an index on Comments.UserId, or one on Comments.Score? Or will it use both, since it needs to both filter and sort?
+
+﻿We’ll show how selectivity influences the engine’s choice of indexes (just like it did for WHERE and ORDER BY), and why you might start out indexing foreign keys, but then have to discard those along the way.
+*/
+
+
+
+
+SELECT TOP 100 u.DisplayName, c.CreationDate, c.Score, c.Text
+  FROM dbo.Users u
+  INNER JOIN dbo.Comments c
+    ON u.Id = c.UserId
+  WHERE u.DisplayName = 'Brent Ozar'
+  ORDER BY c.Score DESC;
